@@ -1,0 +1,34 @@
+pipeline{ 
+	agent { 
+	    label 'Build' 
+	}
+	stages {
+			stage('Checkout-stage') {
+				steps {
+					git branch: 'main', credentialsId: 'github', url: 'https://github.com/Jayachandran-S7/java-example.git'
+					echo 'repo cloning'
+				}
+			}
+
+			stage('Test-stage') {
+				steps {
+					echo 'This is a testcase and taken care while building an aritfact itself'
+				}
+			}
+
+			stage('Build-stage') {
+				steps {
+					sh 'mvn clean package'
+					echo 'package distribution done'
+				}
+			}
+
+			stage('Deploy-stage') {
+				steps {
+					sh 'sudo cp target/*.war /opt/tomcat/apache-tomcat-9.0.68/webapps'	
+					echo 'copied java war file into tomcat webapps folder to configure web element integration'
+				}
+			}	
+
+	}
+}
