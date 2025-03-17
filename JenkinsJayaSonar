@@ -2,10 +2,12 @@ pipeline{
     agent {label 'angular'}
     stages{
        stage('Git Checkout Stage'){
-            steps{
-                git branch: 'main', url: 'https://github.com/Jayachandran-S7/java-example.git'
-            }
-         }        
+            steps {
+					git branch: 'main', credentialsId: 'github', url: 'https://github.com/Jayachandran-S7/java-example.git'
+					echo 'repo cloning'
+			}
+		}
+     
        stage('Build Stage'){
             steps{
                 sh 'mvn clean install'
