@@ -2,12 +2,10 @@ pipeline{
     agent {label 'angular'}
     stages{
        stage('Git Checkout Stage'){
-            steps {
-					git branch: 'main', credentialsId: 'github', url: 'https://github.com/Jayachandran-S7/java-example.git'
-					echo 'repo cloning'
-			}
-		}
-     
+            steps{
+                git branch: 'main', url: 'https://github.com/Jayachandran-S7/java-example.git'
+            }
+         }        
        stage('Build Stage'){
             steps{
                 sh 'mvn clean install'
@@ -16,7 +14,7 @@ pipeline{
         stage('SonarQube Analysis Stage') {
             steps{
                 withSonarQubeEnv('SonarQube-Server') { 
-                    sh 'mvn clean verify sonar:sonar'
+                    sh "mvn clean verify sonar:sonar"
                 }
             }
         }
